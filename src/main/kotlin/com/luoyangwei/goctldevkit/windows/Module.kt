@@ -20,7 +20,7 @@ import com.luoyangwei.goctldevkit.ThemeConstants
  */
 
 @Composable
-fun Module(project: Project, name: String) {
+fun Module(project: Project, name: String, url: String) {
     return Column(Modifier.fillMaxWidth()) {
         Box(Modifier.fillMaxWidth().background(ThemeConstants.Color.ColorBaseFill)) {
             Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -30,7 +30,7 @@ fun Module(project: Project, name: String) {
                     style = TextStyle(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    "~/Document/workspace/account",
+                    url,
                     color = ThemeConstants.Color.ColorSecondaryText,
                     style = TextStyle(fontSize = 10.sp),
 

@@ -25,7 +25,7 @@ fun RestfulRightWindow(project: Project, service: FilesService) {
         Column(modifier = Modifier.verticalScroll(state).fillMaxWidth()) {
 
             for (rfile in service.routeFiles) {
-                Module(project, rfile.value.moduleName)
+                Module(project, rfile.value.moduleName, rfile.value.modulePresentableUrl)
 
                 for (route in rfile.value.routes) {
 

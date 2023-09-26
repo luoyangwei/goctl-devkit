@@ -23,6 +23,7 @@ class VirtualRouteFile(p: Project, virtualFile: VirtualFile) {
 
     var baseUrl: String = ""
     var moduleName: String = ""
+    var modulePresentableUrl: String = ""
     val routes = mutableListOf<Route>()
 
     private fun addRoute(route: Route) {

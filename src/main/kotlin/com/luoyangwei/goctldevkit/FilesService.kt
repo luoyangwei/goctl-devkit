@@ -1,13 +1,11 @@
 package com.luoyangwei.goctldevkit
 
-import com.goide.psi.impl.*
+import com.goide.psi.impl.GoFunctionDeclarationImpl
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
-import com.luoyangwei.goctldevkit.enums.RequestMode
 
 private var LOG = logger<FilesService>()
 
@@ -21,7 +19,7 @@ class FilesService {
      * route 文件
      */
     var routeFiles = mutableMapOf<String, VirtualRouteFile>()
-    var modules = mutableMapOf<String, String>()
+    var modules = mutableMapOf<String, Module>()
     private var routeFileName = "routes.go"
 
 
@@ -31,7 +29,7 @@ class FilesService {
             val virtualRouteFile = VirtualRouteFile(project, gofile)
 
             val module = findModuleName(project, gofile)
-            if (module.isNotBlank()) {
+            if (module != null) {
                 modules[gofile.presentableUrl] = module
             }
 
@@ -47,13 +45,14 @@ class FilesService {
 
     private fun moduleAddressMatching() {
         // 去掉文件名，然后比对路径
-        modules.forEach { (path, filename) ->
-            val filenameIndex = path.indexOf(filename)
+        modules.forEach { (path, module) ->
+            val filenameIndex = path.indexOf(module.name)
             val absolutePath = path.substring(0, filenameIndex - 1)
 
             routeFiles.forEach { (gPath, routeFile) ->
                 if (gPath.indexOf(absolutePath) >= 0) {
-                    routeFile.moduleName = filename
+                    routeFile.moduleName = module.name
+                    routeFile.modulePresentableUrl = module.presentableUrl
                 }
             }
         }
@@ -61,18 +60,28 @@ class FilesService {
 
     // 通过项目目录下的 main 方法来寻找文件
     // 文件即项目名字
-    private fun findModuleName(project: Project, gofile: VirtualFile): String {
+    private fun findModuleName(project: Project, gofile: VirtualFile): Module? {
         if (gofile.presentableUrl.indexOf(project.presentableUrl.toString()) >= 0) {
             val children = PsiManager.getInstance(project).findFile(gofile)?.children
             children?.forEach { item ->
                 val functionDeclaration: GoFunctionDeclarationImpl? = item as? GoFunctionDeclarationImpl
                 if ("main" == functionDeclaration?.name) {
-                    LOG.info("filename: ${gofile.name}")
-                    return gofile.name
+                    var presentableUrl = functionDeclaration.containingFile.virtualFile.presentableUrl
+
+                    val projectFile = project.projectFile
+                    if (projectFile != null) {
+                        presentableUrl = presentableUrl.replace(
+                            projectFile.parent.parent.parent.presentableUrl,
+                            "")
+
+                        // 去掉路径首个斜杠
+                        presentableUrl = presentableUrl.substring(1)
+                    }
+                    return Module(gofile.name, presentableUrl)
                 }
             }
         }
-        return ""
+        return null
     }
 
 

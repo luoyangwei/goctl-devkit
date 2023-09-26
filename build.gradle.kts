@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.luoyangwei"
-version = "1.0.101-SNAPSHOT"
+version = "1.0.102-SNAPSHOT"
 
 repositories {
     mavenCentral()
