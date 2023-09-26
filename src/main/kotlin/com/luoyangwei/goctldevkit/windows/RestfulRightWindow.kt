@@ -31,8 +31,7 @@ fun RestfulRightWindow(project: Project, service: FilesService) {
 
                     val file = rfile.value.getPsiFile()
                     if (file != null) {
-                        route.url = rfile.value.baseUrl + route.url
-                        Item(project, route)
+                        Item(project, rfile.value, route)
                     }
                 }
 

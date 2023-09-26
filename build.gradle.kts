@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.luoyangwei"
-version = "1.0-SNAPSHOT"
+version = "1.0.101-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -18,6 +18,8 @@ repositories {
 intellij {
     version.set("2022.2.5")
     type.set("GO") // Target IDE Platform
+
+    updateSinceUntilBuild.set(false)
 
     plugins.set(
         listOf(

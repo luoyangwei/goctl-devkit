@@ -20,6 +20,7 @@ import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.project.Project
 import com.luoyangwei.goctldevkit.Route
 import com.luoyangwei.goctldevkit.ThemeConstants
+import com.luoyangwei.goctldevkit.VirtualRouteFile
 import com.luoyangwei.goctldevkit.enums.RequestMode
 
 const val POST = "POST"
@@ -34,7 +35,7 @@ const val DEL = "DEL"
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun Item(project: Project, route: Route) {
+fun Item(project: Project, virtualRouteFil: VirtualRouteFile, route: Route) {
     var active by remember { mutableStateOf(false) }
 
     val modifier = Modifier.onPointerEvent(PointerEventType.Enter) {
@@ -55,21 +56,22 @@ fun Item(project: Project, route: Route) {
         }
     }
 
+    val url = virtualRouteFil.baseUrl + route.url
     when (route.mode) {
         RequestMode.GET -> {
-            ModeGetBox(modifier, route.url, active)
+            ModeGetBox(modifier, url, active)
         }
 
         RequestMode.POST -> {
-            ModePostBox(modifier, route.url, active)
+            ModePostBox(modifier, url, active)
         }
 
         RequestMode.DELETE -> {
-            ModeDeleteBox(modifier, route.url, active)
+            ModeDeleteBox(modifier, url, active)
         }
 
         RequestMode.PUT -> {
-            ModePutBox(modifier, route.url, active)
+            ModePutBox(modifier, url, active)
         }
 
         RequestMode.INSTANCE -> {}
