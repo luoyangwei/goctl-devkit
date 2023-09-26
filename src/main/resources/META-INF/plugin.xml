@@ -1,0 +1,60 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.luoyangwei.goctl-devkit</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Goctl-Devkit</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="luoyw1106703846@gmail.com" url="https://github.com/luoyangwei">Luoyangwei</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description>
+        <![CDATA[
+        Development plugin for Go language microservice framework go zero,
+        Provide fast restful development, help you quickly jump to restapi.
+         <br>
+         <ul>
+             <li>identify the go-zero framework api</li>
+             <li>quick jump api</li>
+         <ul>
+
+         --
+         Go 语言微服务框架的开发插件 go-zero,
+         提供快速的 RESTFUL 开发，帮助您快速跳转到 REST API。
+        <br>
+         <ul>
+             <li>识别 go-zero 框架 api</li>
+             <li>快速跳转 api </li>
+         <ul>
+
+        <ul>
+            <li><a href="https://github.com/zeromicro/go-zero">Goctl Devkit</a></li>
+            <li><a href="https://github.com/zeromicro/go-zero">go-zero</a></li>
+        </ul>
+        ]]>
+    </description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.go</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.plugins.go</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow factoryClass="com.luoyangwei.goctldevkit.windows.WindowFactory"
+                    id="Goctl Devkit" anchor="right">
+        </toolWindow>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.goide">
+
+    </extensions>
+</idea-plugin>
