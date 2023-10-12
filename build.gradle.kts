@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.luoyangwei"
-version = "1.0.102-SNAPSHOT"
+version = "1.0.103"
 
 repositories {
     mavenCentral()
@@ -29,6 +29,8 @@ intellij {
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     // 添加 Compose Desktop 需要的依赖项，compose.desktop.currentOs 这个 value 便来自于上面添加的 org.jetbrains.compose 插件
     implementation(compose.desktop.currentOs)
 
